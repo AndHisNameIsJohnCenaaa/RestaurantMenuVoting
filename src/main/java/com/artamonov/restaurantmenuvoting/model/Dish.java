@@ -2,7 +2,7 @@ package com.artamonov.restaurantmenuvoting.model;
 
 import javax.persistence.ManyToOne;
 
-public class Meal extends AbstractBaseEntity {
+public class Dish extends AbstractBaseEntity {
     private String description;
 
     private long price;
@@ -10,14 +10,14 @@ public class Meal extends AbstractBaseEntity {
     @ManyToOne
     private Restaurant restaurant;
 
-    public Meal() {
+    public Dish() {
     }
 
-    public Meal(String description, int calories) {
+    public Dish(String description, int calories) {
         this(null, description, calories);
     }
 
-    public Meal(Integer id,String description, long price) {
+    public Dish(Integer id, String description, long price) {
         super(id);
         this.description = description;
         this.price = price;
