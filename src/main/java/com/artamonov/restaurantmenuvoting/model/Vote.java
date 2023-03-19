@@ -1,21 +1,41 @@
 package com.artamonov.restaurantmenuvoting.model;
 
-import javax.persistence.OneToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "vote", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "cast"}, name = "vote_unique_user_cast_idx")})
+@NoArgsConstructor
+@Getter
+@Setter
 public class Vote extends AbstractBaseEntity {
 
-    public Vote(){
-    }
+    @Column(name = "cast")
+    @NotNull
+    private LocalDate cast;
 
-    public Vote(int id, Restaurant restaurant) {
-        super(id);
-        this.restaurant = restaurant;
-    }
-
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public Vote(LocalDate cast, User user, Restaurant restaurant) {
+        this(null, cast, user, restaurant);
+    }
+
+    public Vote(Integer id, LocalDate cast, User user, Restaurant restaurant) {
+        super(id);
+        this.cast = cast;
+        this.user = user;
+        this.restaurant = restaurant;
+    }
 
 }

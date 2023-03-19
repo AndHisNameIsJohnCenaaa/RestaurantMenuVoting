@@ -1,49 +1,48 @@
 package com.artamonov.restaurantmenuvoting.model;
 
-import javax.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 
-public class Dish extends AbstractBaseEntity {
-    private String description;
+import javax.persistence.*;
+import java.time.LocalDate;
 
-    private long price;
+@Entity
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "cast"}, name = "vote_unique_user_cast_idx")})
+@NoArgsConstructor
+@Getter
+@Setter
+public class Dish extends AbstractNamedEntity {
 
-    @ManyToOne
+    @Column(name = "price")
+    @Range(min = 100)
+    private int price;
+
+    @Column(name = "published", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
+    private LocalDate published;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    public Dish() {
+    public Dish(String name, int calories) {
+        this(null, name, calories);
     }
 
-    public Dish(String description, int calories) {
-        this(null, description, calories);
-    }
-
-    public Dish(Integer id, String description, long price) {
-        super(id);
-        this.description = description;
+    public Dish(Integer id, String name, int price) {
+        super(id, name);
+        this.name = name;
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", published=" + published +
+                '}';
     }
 }
