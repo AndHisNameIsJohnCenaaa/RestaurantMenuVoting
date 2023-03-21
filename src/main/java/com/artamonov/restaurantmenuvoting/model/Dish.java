@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "cast"}, name = "vote_unique_user_cast_idx")})
+@Table(name = "dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "published"}, name = "dish_unique_user_published_idx")})
 @NoArgsConstructor
 @Getter
 @Setter

@@ -38,4 +38,6 @@ public class Vote extends AbstractBaseEntity {
         this.restaurant = restaurant;
     }
 
+
+
 }
