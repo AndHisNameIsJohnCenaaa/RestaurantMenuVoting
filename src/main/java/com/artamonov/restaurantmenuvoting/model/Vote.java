@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Setter
 public class Vote extends AbstractBaseEntity {
 
-    @Column(name = "cast")
+    @Column(name = "cast", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @NotNull
     private LocalDate cast;
 

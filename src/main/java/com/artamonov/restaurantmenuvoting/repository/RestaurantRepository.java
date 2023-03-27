@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -20,4 +21,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     int delete(@Param("id") int id);
 
     List<Restaurant> findByNameStartingWith(String name);
+
+    @Query("SELECT r FROM Restaurant r LEFT JOIN FETCH User u LEFT JOIN FETCH Vote v where v.cast=:cast")
+    List<Restaurant> getAllWithDishesAndVotesByVoteCast(@Param("cast") LocalDate cast);
 }

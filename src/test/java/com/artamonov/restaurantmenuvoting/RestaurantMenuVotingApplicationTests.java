@@ -1,4 +1,4 @@
-package com.artamonov.restrauntmenuvoting;
+package com.artamonov.restaurantmenuvoting;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
